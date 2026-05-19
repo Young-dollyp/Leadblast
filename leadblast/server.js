@@ -23,6 +23,11 @@ app.use(cors());
 app.use(express.json({ limit: '5mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ── SPA catch-all: serve index.html for all non-API routes ──
+app.get(/^(?!\/api).*$/, (_req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // ── Health check (required by Railway / Render / Fly.io) ────
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', uptime: process.uptime(), ts: new Date().toISOString() });
