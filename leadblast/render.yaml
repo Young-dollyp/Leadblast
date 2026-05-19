@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: leadblast
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter          # free tier
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+    healthCheckPath: /api/health
+    autoDeploy: true

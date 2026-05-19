@@ -1,0 +1,24 @@
+{
+  "name": "leadblast",
+  "version": "1.0.0",
+  "description": "LeadBlast — Playwright-powered bulk outreach automation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "install_browsers": "playwright install chromium"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "csv-parse": "^6.2.1",
+    "express": "^5.2.1",
+    "multer": "^2.1.1",
+    "p-limit": "^7.3.0",
+    "playwright": "^1.60.0",
+    "xlsx": "^0.18.5"
+  },
+  "type": "module"
+}
