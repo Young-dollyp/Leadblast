@@ -10,6 +10,9 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 # Install Chromium and all required system dependencies via Playwright
+# Set a stable path so browsers are written into the image filesystem,
+# not the ephemeral build cache at /root/.cache/ms-playwright/
+ENV PLAYWRIGHT_BROWSERS_PATH=/app/.playwright
 RUN npx playwright install --with-deps chromium
 
 # Copy application source
