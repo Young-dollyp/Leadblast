@@ -1,23 +1,21 @@
 # ── LeadBlast — Production Docker Image ──────────────────────
-# Based on official Playwright image which has Chromium pre-installed
-FROM mcr.microsoft.com/playwright:v1.44.0-jammy
+FROM node:20-bookworm-slim
 
 WORKDIR /app
 
 # Copy dependency files first (layer caching)
 COPY package*.json ./
 
-# Install Node dependencies (skip Playwright browser download — already in base image)
+# Install Node dependencies
 RUN npm ci --omit=dev
+
+# Install Chromium and all required system dependencies via Playwright
+RUN npx playwright install --with-deps chromium
 
 # Copy application source
 COPY server.js ./
 COPY src/       ./src/
 COPY public/    ./public/
-
-# Playwright env — use the pre-installed Chromium in the base image
-ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
-ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
 # Non-root user for security
 RUN groupadd -r appuser && useradd -r -g appuser -G audio,video appuser \
